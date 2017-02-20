@@ -1,0 +1,11 @@
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+**.pyc
+**.gz
+data/
+download/
+submits/
+models/
+*.ipynb
+*.zip
