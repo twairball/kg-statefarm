@@ -44,7 +44,7 @@ def submit(preds, test_batches, filepath):
     submission.to_csv(filepath, index=False, compression='gzip')
 
 def push_to_kaggle(filepath):
-    command = "kg submit -u twairball@yahoo.com -p f00tball -c state-farm-distracted-driver-detection " + filepath
+    command = "kg submit -c state-farm-distracted-driver-detection " + filepath
     os.system(command)
 
 class BaseConvModel():
@@ -80,7 +80,8 @@ class BaseConvModel():
         return image.ImageDataGenerator().flow_from_directory(path, 
             target_size = target_size,
             batch_size = batch_size,
-            class_mode = 'categorical'
+            class_mode = 'categorical',
+            shuffle = False
         )
 
     def create_model(self):
@@ -102,7 +103,7 @@ class BaseConvModel():
 
         self.model.fit_generator(
             self.train_batches, 
-            samples_per_epoch = self.train_batches,
+            samples_per_epoch = self.train_batches.nb_sample,
             nb_epoch = nb_epoch,
             validation_data = self.val_batches, 
             nb_val_samples = self.val_batches.nb_sample)
